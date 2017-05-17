@@ -22,8 +22,8 @@ class Page extends Component {
           <meta property="og:url" content="https://danieldunderfelt.com"/>
           <meta name="twitter:card" content="summary_large_image"/>
 
-          <meta property="og:site_name" content="Daniel Dunderfelt"/>
-          <meta name="twitter:image:alt" content="Daniel Dunderfelt"/>
+          <meta property="og:site_name" content="LibSize"/>
+          <meta name="twitter:image:alt" content="LibSize"/>
         </Head>
 
         <Provider store={ state }>
@@ -31,6 +31,14 @@ class Page extends Component {
             { this.props.children }
           </div>
         </Provider>
+
+        <script dangerouslySetInnerHTML={{ __html: ` (function(i,s,o,g,r,a,m)\{i['GoogleAnalyticsObject']=r;i[r]=i[r]||function()\{
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-99302912-1', 'auto');
+  ga('send', 'pageview');` }}></script>
 
         <style jsx>{`
           .page-wrapper {
