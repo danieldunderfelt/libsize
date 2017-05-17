@@ -25,6 +25,7 @@ class Input extends Component {
           onSubmit={ this.onSubmit }>
           <p>
             <input
+              className="url-input"
               value={ weighUrl }
               onInput={ e => this.actions.handleInput(e.target.value)}
               name="url"
@@ -34,6 +35,11 @@ class Input extends Component {
               type="submit">Weigh</button>
           </p>
         </form>
+        <style jsx>{`
+          .url-input {
+            padding: .5em .25em;
+          }
+        `}</style>
       </div>
     )
   }
