@@ -10,22 +10,22 @@ const app = next({ dev })
 const handle = app.getRequestHandler()
 
 app.prepare()
-  .then(() => {
+  .then(function() {
     const server = express()
 
-    server.get('/json', (req, res) => {
+    server.get('/json', function(req, res) {
       const url = decodeURIComponent(req.query.url)
 
       if(validator.isURL(url)) {
         got(url)
-          .then(response => {
+          .then(function(response) {
             res.json({
               size: Buffer.byteLength(response.body, 'utf8'),
               gzipSize: gzipSize.sync(response.body),
               url
             })
           })
-          .catch(error => {
+          .catch(function(error) {
             res.status(500).send('Something went wrong.')
           })
       } else {
@@ -33,11 +33,11 @@ app.prepare()
       }
     })
 
-    server.get('*', (req, res) => {
+    server.get('*', function(req, res) {
       return handle(req, res)
     })
 
-    server.listen(3000, (err) => {
+    server.listen(3000, function(err) {
       if (err) throw err
       console.log('> Ready on http://localhost:3000')
     })

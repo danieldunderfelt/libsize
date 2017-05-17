@@ -17,8 +17,8 @@ class Page extends Component {
           <link href="https://fonts.googleapis.com/css?family=Work+Sans:400,700" rel="stylesheet" />
           {/*<link rel='shortcut icon' type='image/x-icon' href='/static/favicon.png'/>*/}
           <meta property="og:title" content="LibSize"/>
-          <meta property="og:description" content="Personal website for Daniel Dunderfelt"/>
-          <meta property="og:image" content="https://mediamatch.live/static/images/me.jpg"/>
+          <meta property="og:description" content="Easily get the size of libraries"/>
+          <meta property="og:image" content="https://danieldunderfelt.com/static/images/me.jpg"/>
           <meta property="og:url" content="https://danieldunderfelt.com"/>
           <meta name="twitter:card" content="summary_large_image"/>
 
