@@ -18,9 +18,38 @@ class WeighUrl extends Component {
 
     return (
       <div>
-        <Input
-          onSubmit={ this.onSubmit } />
+        <header>
+          <h1>
+            Libsize
+          </h1>
+          <Input
+            onSubmit={ this.onSubmit } />
+        </header>
         <History />
+
+        <style jsx>{`
+          header {
+            margin-bottom: 3em;
+            display: flex;
+            flex-direction: column;
+          }
+
+          h1 {
+            text-align: center;
+            margin: 0 .25em .5em 0;
+          }
+
+          @media (min-width: 875px) {
+            header {
+              flex-direction: row;
+              align-items: flex-end;
+            }
+
+            h1 {
+              margin: 0 .25em 0 0;
+            }
+          }
+        `}</style>
       </div>
     )
   }

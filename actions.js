@@ -21,6 +21,15 @@ export default state => {
     return result
   })
 
+  const removeItem = action(urlOrObj => {
+    const { url = urlOrObj } = urlOrObj
+    const idx = state.results.findIndex(res => res.url === url)
+
+    if(idx > -1) {
+      state.results.splice(idx, 1)
+    }
+  })
+
   function weighUrl(url) {
     const normalizedUrl = normalizeUrl(url)
     const existing = state.results.find(res => res.url === normalizedUrl)
@@ -34,6 +43,8 @@ export default state => {
   return {
     handleInput,
     toggleLoading,
+    addHistory,
+    removeItem,
     weighUrl
   }
 }

@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react'
 import _ from 'lodash'
-import prettyBytes from 'pretty-bytes'
+import prettyBytes from '../helpers/prettyBytes'
+import actions from '../actions'
 
 @inject('store')
 @observer
 class History extends Component {
+  actions = (actions(this.props.store))
 
   render() {
     const { results } = this.props.store
@@ -18,16 +20,17 @@ class History extends Component {
               <h4>
                 { result.url }
               </h4>
-              <dl>
-                <dt>Size</dt>
-                <dd>
-                  <strong>{ prettyBytes(result.size) }</strong>
-                </dd>
-                <dt>Gzipped</dt>
-                <dd>
-                  <strong>{ prettyBytes(result.gzipSize) }</strong>
-                </dd>
-              </dl>
+              <p>
+                Size: <strong>{ prettyBytes(result.size) }</strong>
+              </p>
+              <p>
+                Gzipped: <strong>{ prettyBytes(result.gzipSize) }</strong>
+              </p>
+              <p>
+                <button onClick={ e => this.actions.removeItem(result.url) }>
+                  Remove
+                </button>
+              </p>
             </li>
           )) }
         </ul>
@@ -50,16 +53,20 @@ class History extends Component {
           .size-result {
             padding: 2em;
             margin-bottom: 1em;
-            background: rgba(255,255,255,.5);
+            background: #5a5a5a;
           }
 
           .size-result h4 {
             margin-top: 0;
           }
 
+          .size-result p {
+            margin: 0;
+          }
+
           .total {
             margin-top: 1em;
-            border-top: 3px solid black;
+            border-top: 3px solid white;
             text-align: right;
             padding-top: 1.5em;
           }

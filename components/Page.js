@@ -42,7 +42,13 @@ class Page extends Component {
 
         <style jsx>{`
           .page-wrapper {
-            padding: 2em;
+            padding: 1em;
+          }
+
+          @media (min-width: 875px) {
+            .page-wrapper {
+              padding: 2em;
+            }
           }
         `}</style>
 
@@ -50,27 +56,36 @@ class Page extends Component {
           html {
             font-family: 'Work Sans', sans-serif;
             font-weight: 400;
+            font-size: 20px;
+            color: white;
           }
           body {
             margin: 0;
-            background: #ddefff;
+            background: #292939;
             min-height: 100%;
           }
           * {
             box-sizing: border-box;
           }
           h1 {
-            font-family: 'Rubik Mono One', sans-serif;
+            font-size: 3em;
+            line-height: 1;
           }
           p {
             line-height: 1.5;
-            font-size: 1.125em;
           }
           strong {
             font-weight: 700;
           }
           .root-wrapper {
             height: 100%;
+          }
+
+          @media (min-width: 875px) {
+            h1 {
+              font-size: 5em;
+              line-height: .7;
+            }
           }
         `}</style>
       </div>

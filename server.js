@@ -2,7 +2,6 @@ const express = require('express')
 const next = require('next')
 const got = require('got')
 const gzipSize = require('gzip-size')
-const prettyBytes = require('pretty-bytes')
 const validator = require('validator')
 
 const dev = process.env.NODE_ENV !== 'production'
