@@ -28,7 +28,7 @@ class Input extends Component {
               value={ weighInput }
               onInput={ e => this.actions.handleInput(e.target.value)}
               name="input"
-              placeholder="npm package name or input..."
+              placeholder="npm package name or url..."
               type="text" />
             <button
               className="button"

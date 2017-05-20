@@ -32,6 +32,7 @@ export default state => {
   })
 
   function weighInput(input) {
+    toggleLoading(true)
     let inputStr = input
 
     if(isUrl(input)) {
@@ -39,11 +40,15 @@ export default state => {
     }
 
     const existing = state.results.find(res => res.input === inputStr)
-    if(existing) return Promise.resolve(existing)
+    if(existing) {
+      toggleLoading(false)
+      return Promise.resolve(existing)
+    }
 
     return fetch('/json?input=' + encodeURIComponent(inputStr))
       .then(result => result.json())
       .then(result => addHistory(result))
+      .then(() => toggleLoading(false))
   }
 
   return {

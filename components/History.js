@@ -10,10 +10,11 @@ class History extends Component {
   actions = (actions(this.props.store))
 
   render() {
-    const { results } = this.props.store
+    const { results, loading } = this.props.store
 
     return (
       <div>
+        { loading && <h3>Loading...</h3> }
         <ul className="results">
           { _.reverse(results.slice()).map(result => (
             <li className="size-result" key={ result.input }>
@@ -53,7 +54,7 @@ class History extends Component {
           .size-result {
             padding: 2em;
             margin-bottom: 1em;
-            background: #5a5a5a;
+            background: rgba(255,255,255, .075);
           }
 
           .size-result h4 {
