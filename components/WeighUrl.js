@@ -9,8 +9,8 @@ import History from './History'
 class WeighUrl extends Component {
   actions = (actions(this.props.store))
 
-  onSubmit = url => {
-    this.actions.weighUrl(url)
+  onSubmit = input => {
+    this.actions.weighInput(input)
     this.actions.handleInput('')
   }
 

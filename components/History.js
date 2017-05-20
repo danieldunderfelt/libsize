@@ -16,9 +16,9 @@ class History extends Component {
       <div>
         <ul className="results">
           { _.reverse(results.slice()).map(result => (
-            <li className="size-result" key={ result.url }>
+            <li className="size-result" key={ result.input }>
               <h4>
-                { result.url }
+                { result.input }
               </h4>
               <p>
                 Size: <strong>{ prettyBytes(result.size) }</strong>
@@ -27,7 +27,7 @@ class History extends Component {
                 Gzipped: <strong>{ prettyBytes(result.gzipSize) }</strong>
               </p>
               <p>
-                <button onClick={ e => this.actions.removeItem(result.url) }>
+                <button onClick={ e => this.actions.removeItem(result.input) }>
                   Remove
                 </button>
               </p>

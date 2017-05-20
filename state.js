@@ -3,7 +3,7 @@ import { observable } from 'mobx'
 export default () => {
 
   const store = observable({
-    weighUrl: '',
+    weighInput: '',
     loading: false,
     results: []
   })

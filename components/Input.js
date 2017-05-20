@@ -9,12 +9,12 @@ class Input extends Component {
 
   onSubmit = e => {
     e.preventDefault()
-    const { weighUrl } = this.props.store
-    this.props.onSubmit(weighUrl)
+    const { weighInput } = this.props.store
+    this.props.onSubmit(weighInput)
   }
 
   render() {
-    const { weighUrl } = this.props.store
+    const { weighInput } = this.props.store
 
     return (
       <div className="input-form">
@@ -24,12 +24,12 @@ class Input extends Component {
           onSubmit={ this.onSubmit }>
           <div className="input-wrapper">
             <input
-              className="url-input"
-              value={ weighUrl }
+              className="input-input"
+              value={ weighInput }
               onInput={ e => this.actions.handleInput(e.target.value)}
-              name="url"
-              placeholder="npm package name or url..."
-              type="url" />
+              name="input"
+              placeholder="npm package name or input..."
+              type="text" />
             <button
               className="button"
               type="submit">Weigh</button>
@@ -45,7 +45,7 @@ class Input extends Component {
             align-items: flex-end;
           }
 
-          .url-input {
+          .input-input {
             padding: .5rem;
             font-size: 1em;
             display: block;
@@ -66,7 +66,7 @@ class Input extends Component {
           }
 
           @media (min-width: 875px) {
-            .url-input, .button {
+            .input-input, .button {
               font-size: 1.4em;
             }
           }

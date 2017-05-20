@@ -19,7 +19,7 @@ class Page extends Component {
           <meta property="og:title" content="LibSize"/>
           <meta property="og:description" content="Easily get the size of libraries"/>
           <meta property="og:image" content="https://danieldunderfelt.com/static/images/me.jpg"/>
-          <meta property="og:url" content="https://danieldunderfelt.com"/>
+          <meta property="og:input" content="https://danieldunderfelt.com"/>
           <meta name="twitter:card" content="summary_large_image"/>
 
           <meta property="og:site_name" content="LibSize"/>

@@ -1,8 +1,8 @@
 const express = require('express')
 const next = require('next')
-const got = require('got')
-const gzipSize = require('gzip-size')
-const validator = require('validator')
+const stringTest = require('./server/stringTest')
+const getUrlSize = require('./server/getUrlSize')
+const getUrlForLibrary = require('./server/getUrlForLibrary')
 
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
@@ -13,22 +13,29 @@ app.prepare()
     const server = express()
 
     server.get('/json', function(req, res) {
-      const url = decodeURIComponent(req.query.url)
+      const input = decodeURIComponent(req.query.input)
 
-      if(validator.isURL(url)) {
-        got(url)
-          .then(function(response) {
-            res.json({
-              size: Buffer.byteLength(response.body, 'utf8'),
-              gzipSize: gzipSize.sync(response.body),
-              url
-            })
-          })
-          .catch(function(error) {
-            res.status(500).send('Something went wrong.')
-          })
+      function sizeResponse(size, inputArg, type) {
+        res.json(Object.assign(size, {
+          input: inputArg,
+          type
+        }))
+      }
+
+      function handleError(status = 500, message = 'Something went wrong.') {
+        res.status(status).send(message)
+      }
+
+      if(stringTest.isUrl(input)) {
+        getUrlSize(input)
+          .then(size => sizeResponse(size, input, 'url'))
+          .catch(err => handleError(500, 'Failed retrieving the size.'))
       } else {
-        res.status(400).send('Give me an url to a text file!')
+        stringTest.isNpmPackage(input)
+          .then(isNpm => isNpm ? getUrlForLibrary(input) : false)
+          .then(url => !url ? handleError(400, 'Could not find the package on npm') : getUrlSize(url))
+          .then(size => sizeResponse(size, input, 'npm'))
+          .catch(() => handleError(500, 'Failed retrieving the size.'))
       }
     })
 
