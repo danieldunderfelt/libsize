@@ -6,9 +6,9 @@
   "author": "Daniel Dunderfelt <dunderfeltdaniel@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "node server.js",
+    "dev": "nodemon --watch server server/server.js",
     "build": "next build",
-    "start": "NODE_ENV=production node server.js"
+    "start": "NODE_ENV=production node server/server.js"
   },
   "now": {
     "alias": "libsize.com"
@@ -24,6 +24,7 @@
     "mobx": "^3.1.9",
     "mobx-react": "^4.1.8",
     "next": "^2.3.1",
+    "nodemon": "^1.11.0",
     "normalize-url": "^1.9.1",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",

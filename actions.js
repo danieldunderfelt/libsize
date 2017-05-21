@@ -1,4 +1,4 @@
-import { action } from 'mobx'
+import { action, observable, extendObservable } from 'mobx'
 import fetch from 'unfetch'
 import isUrl from './helpers/isUrl'
 import normalizeUrl from 'normalize-url'
@@ -9,11 +9,11 @@ export default state => {
     state.weighInput = input
   })
 
-  const toggleLoading = action((setTo = !state.loading) => {
-    state.loading = setTo
+  const toggleLoading = action((result, setTo = !result.loading) => {
+    result._loading = setTo
   })
 
-  const addHistory = action(result => {
+  const addResult = action(result => {
     if(state.results.findIndex(res => res.input === result.input) > -1) {
       return result
     }
@@ -31,30 +31,64 @@ export default state => {
     }
   })
 
+  function createResult(input, type) {
+    const result = observable({
+      input,
+      type,
+      size: 0,
+      gzipSize: 0,
+      _loading: false,
+      _error: false
+    })
+
+    return result
+  }
+
+  function handleError(res) {
+    if(!res.ok) {
+      throw Error(res.statusText)
+    }
+
+    return res
+  }
+
+  const showError = action((result, message) => {
+    result._error = message
+    toggleLoading(result, false)
+  })
+
   function weighInput(input) {
-    toggleLoading(true)
     let inputStr = input
+    let type = 'npm'
 
     if(isUrl(input)) {
       inputStr = normalizeUrl(input)
+      type = 'url'
     }
 
     const existing = state.results.find(res => res.input === inputStr)
     if(existing) {
-      toggleLoading(false)
+      toggleLoading(existing, false)
       return Promise.resolve(existing)
     }
 
+    const result = createResult(inputStr, type)
+
+    toggleLoading(result, true)
+    addResult(result)
+
     return fetch('/json?input=' + encodeURIComponent(inputStr))
-      .then(result => result.json())
-      .then(result => addHistory(result))
-      .then(() => toggleLoading(false))
+      .then(handleError)
+      .then(response => response.json())
+      .then(response => extendObservable(result, response))
+      .then(res => toggleLoading(res, false))
+      .catch(err => showError(result, err.message))
   }
 
   return {
     handleInput,
     toggleLoading,
-    addHistory,
+    addResult,
     removeItem,
     weighInput
   }

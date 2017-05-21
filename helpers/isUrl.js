@@ -2,13 +2,14 @@
  * Expose `isUrl`.
  */
 
-module.exports = isUrl;
+module.exports = isUrl
 
 /**
  * Matcher.
  */
 
-var matcher = /^(?:\w+:)?\/\/([^\s\.]+\.\S{2}|localhost[\:?\d]*)\S*$/;
+var matcher = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/
+
 
 /**
  * Loosely validate a URL `string`.
@@ -18,5 +19,5 @@ var matcher = /^(?:\w+:)?\/\/([^\s\.]+\.\S{2}|localhost[\:?\d]*)\S*$/;
  */
 
 function isUrl(string){
-  return matcher.test(string);
+  return matcher.test(string)
 }

@@ -10,28 +10,46 @@ class History extends Component {
   actions = (actions(this.props.store))
 
   render() {
-    const { results, loading } = this.props.store
+    const { results } = this.props.store
 
     return (
       <div>
-        { loading && <h3>Loading...</h3> }
         <ul className="results">
           { _.reverse(results.slice()).map(result => (
             <li className="size-result" key={ result.input }>
               <h4>
-                { result.input }
+                { result.type }: { result.input }
               </h4>
-              <p>
-                Size: <strong>{ prettyBytes(result.size) }</strong>
-              </p>
-              <p>
-                Gzipped: <strong>{ prettyBytes(result.gzipSize) }</strong>
-              </p>
-              <p>
-                <button onClick={ e => this.actions.removeItem(result.input) }>
-                  Remove
-                </button>
-              </p>
+              { result._loading ? (
+                <div className="content">
+                  <h3>Weighing in progress...</h3>
+                </div>
+              ) : result._error ? (
+                <div className="content error">
+                  <p>
+                    { result._error }
+                  </p>
+                  <p>
+                    <button onClick={ e => this.actions.removeItem(result.input) }>
+                      Remove
+                    </button>
+                  </p>
+                </div>
+              ) : (
+                <div className="content">
+                  <p>
+                    Size: <strong>{ prettyBytes(result.size) }</strong>
+                  </p>
+                  <p>
+                    Gzipped: <strong>{ prettyBytes(result.gzipSize) }</strong>
+                  </p>
+                  <p>
+                    <button onClick={ e => this.actions.removeItem(result.input) }>
+                      Remove
+                    </button>
+                  </p>
+                </div>
+              )}
             </li>
           )) }
         </ul>

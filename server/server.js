@@ -1,8 +1,8 @@
 const express = require('express')
 const next = require('next')
-const stringTest = require('./server/stringTest')
-const getUrlSize = require('./server/getUrlSize')
-const getUrlForLibrary = require('./server/getUrlForLibrary')
+const stringTest = require('./stringTest')
+const getUrlSize = require('./getUrlSize')
+const getUrlForLibrary = require('./getUrlForLibrary')
 
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
@@ -23,19 +23,27 @@ app.prepare()
       }
 
       function handleError(status = 500, message = 'Something went wrong.') {
-        res.status(status).send(message)
+        res.statusMessage = message
+        res.status(status).end()
       }
 
-      if(stringTest.isUrl(input)) {
-        getUrlSize(input)
-          .then(size => sizeResponse(size, input, 'url'))
-          .catch(err => handleError(500, 'Failed retrieving the size.'))
+      let urlToWeigh = input
+      let type = 'url'
+
+      if(!stringTest.isUrl(input)) {
+        urlToWeigh = getUrlForLibrary(input)
+        type = 'npm'
+      }
+
+      if(!urlToWeigh) {
+        handleError(400, 'Input empty or invalid.')
       } else {
-        stringTest.isNpmPackage(input)
-          .then(isNpm => isNpm ? getUrlForLibrary(input) : false)
-          .then(url => !url ? handleError(400, 'Could not find the package on npm') : getUrlSize(url))
-          .then(size => sizeResponse(size, input, 'npm'))
-          .catch(() => handleError(500, 'Failed retrieving the size.'))
+        getUrlSize(urlToWeigh)
+          .then(size => sizeResponse(size, input, type))
+          .catch(err => {
+            console.log(err)
+            handleError(500, 'Failed retrieving the size.')
+          })
       }
     })
 
