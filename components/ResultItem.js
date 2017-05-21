@@ -77,6 +77,10 @@ class ResultItem extends Component {
             user-select: none;
           }
 
+          .error .type-badge {
+            background: none;
+          }
+
           .remove-btn {
             background: #aa6666;
             color: white;

@@ -40,10 +40,7 @@ app.prepare()
       } else {
         getUrlSize(urlToWeigh)
           .then(size => sizeResponse(size, input, type))
-          .catch(err => {
-            console.log(err)
-            handleError(500, 'Failed retrieving the size.')
-          })
+          .catch(err => handleError(500, 'Failed retrieving the size.'))
       }
     })
 
