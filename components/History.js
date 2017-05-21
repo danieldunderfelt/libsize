@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react'
 import _ from 'lodash'
-import prettyBytes from '../helpers/prettyBytes'
 import actions from '../actions'
+import ResultItem from './ResultItem'
+import prettyBytes from '../helpers/prettyBytes'
 
 @inject('store')
 @observer
@@ -17,39 +18,9 @@ class History extends Component {
         <ul className="results">
           { _.reverse(results.slice()).map(result => (
             <li className="size-result" key={ result.input }>
-              <h4>
-                { result.type }: { result.input }
-              </h4>
-              { result._loading ? (
-                <div className="content">
-                  <h3>Weighing in progress...</h3>
-                </div>
-              ) : result._error ? (
-                <div className="content error">
-                  <p>
-                    { result._error }
-                  </p>
-                  <p>
-                    <button onClick={ e => this.actions.removeItem(result.input) }>
-                      Remove
-                    </button>
-                  </p>
-                </div>
-              ) : (
-                <div className="content">
-                  <p>
-                    Size: <strong>{ prettyBytes(result.size) }</strong>
-                  </p>
-                  <p>
-                    Gzipped: <strong>{ prettyBytes(result.gzipSize) }</strong>
-                  </p>
-                  <p>
-                    <button onClick={ e => this.actions.removeItem(result.input) }>
-                      Remove
-                    </button>
-                  </p>
-                </div>
-              )}
+              <ResultItem
+                onRemove={ this.actions.removeItem }
+                result={ result } />
             </li>
           )) }
         </ul>
@@ -67,20 +38,13 @@ class History extends Component {
             list-style: none;
             margin: 0;
             padding: 0;
+            display: flex;
+            flex-wrap: wrap;
           }
 
           .size-result {
-            padding: 2em;
             margin-bottom: 1em;
-            background: rgba(255,255,255, .075);
-          }
-
-          .size-result h4 {
-            margin-top: 0;
-          }
-
-          .size-result p {
-            margin: 0;
+            margin-right: 1em;
           }
 
           .total {
