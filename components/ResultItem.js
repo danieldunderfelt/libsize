@@ -24,11 +24,11 @@ class ResultItem extends Component {
           { input }
         </h4>
         { _loading ? (
-          <div className="content">
+          <div className="content padded">
             <h3>Weighing in progress...</h3>
           </div>
         ) : _error ? (
-          <div className="content">
+          <div className="content padded">
             <p>
               { _error }
             </p>
@@ -58,7 +58,7 @@ class ResultItem extends Component {
           }
 
           .result-item.error {
-            background: #aa6666;
+            background: #684d4f;
           }
 
           .meta {
@@ -101,6 +101,11 @@ class ResultItem extends Component {
 
           .content {
             border-top: 1px solid #555;
+          }
+
+          .content.padded {
+            padding: .5em .75em .5em .6em;
+            border: 0;
           }
 
           .result-item p {
