@@ -1,8 +1,8 @@
 # LibSize
 
-Go to [libsize.com](https://libsize.com) and throw the url to the library into the box. It'll tell you the size of the library.
-It'll simply download what's behind the url and return the raw size as well as the gzipped size. Easy peasy. For now, I suggest
-using [https://unpkg.com](https://unpkg.com) urls to check npm package sizes.
+### This project is currently unmaintained.
+
+LibSize tells you (approximately) how much a package will add to your bundle size.
 
 ### API
 
